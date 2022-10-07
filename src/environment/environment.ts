@@ -3,7 +3,7 @@ interface Environment {
 }
 
 const environment: Environment = {
-  apiUrl: 'http://localhost:4040/api/v1',
+  apiUrl: 'https://undabot-server.herokuapp.com/api/v1',
 };
 
 export default environment;
