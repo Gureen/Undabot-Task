@@ -26,3 +26,7 @@ export interface IRules {
   min: number;
   max: number;
 }
+
+export interface ErrorModel{
+  string:"ada"
+}

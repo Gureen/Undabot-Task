@@ -8,16 +8,40 @@ import { useFetch } from '../utility/useFetch';
 const SURVEY_PATH = environment.apiUrl + '/survey';
 
 const Survey = () => {
-  const { loading, data } = useFetch<IResponse<ISurvey>>(SURVEY_PATH);
+  const [surveyLoading, surveyData] = useFetch<IResponse<ISurvey>>(SURVEY_PATH);
   const [answers, setAnswers] = useState({});
   const navigate = useNavigate();
 
-  const surveyFormData = data?.data?.attributes;
-  const surveyFormQuestions = data?.data?.attributes?.questions;
+  const ANSWERS_PATH =
+    environment.apiUrl + `/survey/${surveyData?.data.id}/answers`;
+
+  const surveyFormData = surveyData?.data?.attributes;
+  const surveyFormQuestions = surveyData?.data?.attributes?.questions;
 
   const addInfo = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    navigate('/success');
+
+    const payload = {
+      data: {
+        type: 'surveyAnswers',
+        attributes: {
+          answers: Object.values(answers),
+        },
+      },
+    };
+
+    const bodyData = JSON.stringify(payload);
+    fetch(ANSWERS_PATH, {
+      method: 'POST',
+      body: bodyData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .finally(() => {
+        navigate('/success', { state: { payload } });
+      });
   };
 
   const onChangeHandler = (value: string, questionId: string) => {
@@ -30,7 +54,7 @@ const Survey = () => {
     });
   };
 
-  if (loading) {
+  if (surveyLoading) {
     return (
       <main>
         <Loading />

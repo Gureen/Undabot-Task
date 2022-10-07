@@ -1,16 +1,22 @@
+import { useLocation } from 'react-router-dom';
+
 const Success = () => {
+  const { state } = useLocation();
+  const { payload } = state;
+
   return (
     <h1
       className='row justify-content-end align-items-center min-vh-100'
       style={{ paddingRight: '100px' }}>
-      Thank you for filling the form!
+      Thank you for filling the form.
       <br />
       What film did you watch?
       <br />
-      Goonies
+      {payload?.data?.attributes?.answers[0]?.answer}
       <br />
       How would you rate the film?
-      <br />6
+      <br />
+      {payload?.data?.attributes?.answers[1]?.answer}
     </h1>
   );
 };

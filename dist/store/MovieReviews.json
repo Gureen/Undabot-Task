@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "surveyAnswers",
+    "attributes": {
+      "answers": [
+        { "questionId": "film", "answer": "asdsad" },
+        { "questionId": "review", "answer": "4" }
+      ]
+    }
+  }
+}
